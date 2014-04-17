@@ -7,12 +7,16 @@
 package com.kabaso.askweb.domain;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -30,6 +34,30 @@ public class Person implements Serializable {
     private String email;
     @Embedded
     private Contact contact;
+    @OneToMany
+    @JoinColumn(name="person_id")
+    List<Account> accounts;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="person_id")
+    List<Club> clubs;
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Club> getClubs() {
+        return clubs;
+    }
+
+    public void setClubs(List<Club> clubs) {
+        this.clubs = clubs;
+    }
+    
+    
 
     public Long getId() {
         return id;

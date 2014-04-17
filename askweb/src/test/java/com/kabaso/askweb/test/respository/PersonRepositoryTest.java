@@ -51,9 +51,43 @@ public class PersonRepositoryTest {
          c.setLandline("12345");
          p.setContact(c);
          repo.save(p);
+         id = p.getId();
          Assert.assertNotNull(p);
          
      
+     }
+     
+     @Test(dependsOnMethods = "createPerson")
+     public void readPerson(){
+         repo = ctx.getBean(PersonRepository.class);
+         Person person = repo.findOne(id);
+         Assert.assertEquals(person.getFirstname(), "B");
+         
+     }
+     
+    @Test(dependsOnMethods = "readPerson")
+     private void updatePerson(){
+         repo = ctx.getBean(PersonRepository.class);
+         Person person = repo.findOne(id);
+         person.setFirstname("Boniface");
+         repo.save(person);
+         
+         Person updatePerson = repo.findOne(id);
+         Assert.assertEquals(updatePerson.getFirstname(), "Boniface");
+         
+     }
+     
+     @Test(dependsOnMethods = "updatePerson")
+     private void deletePerson(){
+         repo = ctx.getBean(PersonRepository.class);
+         Person person = repo.findOne(id);
+         repo.delete(person);
+         
+         Person deletedPerson = repo.findOne(id);
+         
+         Assert.assertNull(deletedPerson);
+         
+         
      }
 
     @BeforeClass
