@@ -24,22 +24,42 @@ public class Club implements Serializable {
     private Long id;
     private String name;
 
+    private Club(Builder builder) {
+       id = builder.id;
+       name= builder.name;
+    }
+
+    private Club() {
+    }
+    
+    public static class Builder{
+        private Long id;
+        private String name;
+
+        public Builder(String name) {
+            this.name = name;
+        }
+        
+        public Builder id(Long value){
+            this. id = value;
+            return this;
+        }
+        
+        public Club build(){
+            return new Club(this);
+        }
+        
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+  
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
+  
     
 
     @Override

@@ -7,6 +7,7 @@
 package com.kabaso.askweb.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,44 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private BigDecimal balance;
+
+    private Account(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+        balance = builder.balance;
+        }
+
+    public Account() {
+    }
+    
+    
+    
+    public static class Builder{
+    private Long id;
+    private String name;
+    private BigDecimal balance;
+
+        public Builder(String name) {
+            this.name = name;
+        }
+    
+        public Builder id(Long value){
+            this.id = value;
+            return this;
+        }
+        
+        public Builder balance(BigDecimal value){
+            this.balance = value;
+            return this;
+        }
+        
+        public Account build(){
+            return new Account(this);
+        }
+    
+        
+    }
 
     public Long getId() {
         return id;
@@ -30,16 +69,6 @@ public class Account implements Serializable {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override
