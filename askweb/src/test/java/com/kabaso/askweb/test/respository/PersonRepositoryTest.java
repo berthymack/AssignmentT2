@@ -7,10 +7,7 @@
 package com.kabaso.askweb.test.respository;
 
 import com.kabaso.askweb.app.conf.ConnectionConfig;
-import com.kabaso.askweb.domain.Contact;
-import com.kabaso.askweb.domain.Customer;
 import com.kabaso.askweb.domain.Person;
-import com.kabaso.askweb.respository.CustomerRepository;
 import com.kabaso.askweb.respository.PersonRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -41,15 +38,10 @@ public class PersonRepositoryTest {
      @Test
      public void createPerson() {
          repo = ctx.getBean(PersonRepository.class);
-         Person p = new Person();
-         p.setEmail("kabaso@cput.ac.za");
-         p.setFirstname("B");
-         p.setLastname("K");
-         Contact c = new Contact();
-         c.setAddress("p.O.Box 13");
-         c.setCell("2424253");
-         c.setLandline("12345");
-         p.setContact(c);
+         Person p = new Person.Builder("kabasob@cput.ac.za")
+                 .firstname("B")
+                 .lastnaname("K")
+                 .build();
          repo.save(p);
          id = p.getId();
          Assert.assertNotNull(p);
@@ -69,11 +61,15 @@ public class PersonRepositoryTest {
      private void updatePerson(){
          repo = ctx.getBean(PersonRepository.class);
          Person person = repo.findOne(id);
-         person.setFirstname("Boniface");
-         repo.save(person);
+         Person updatedPerson = new Person.Builder("kabasob@cput.ac.za")
+                 .person(person)
+                 .firstname("Boniface")
+                 .build();
+        
+         repo.save(updatedPerson);
          
-         Person updatePerson = repo.findOne(id);
-         Assert.assertEquals(updatePerson.getFirstname(), "Boniface");
+         Person newPerson = repo.findOne(id);
+         Assert.assertEquals(newPerson.getFirstname(), "Boniface");
          
      }
      
