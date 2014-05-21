@@ -68,6 +68,7 @@ public class Librarian implements Serializable {
         {
             id = lib.getId();
             name = lib.getName();
+            age = lib.getAge();
             cont = lib.getCont();
             return this;
         }
@@ -91,7 +92,7 @@ public class Librarian implements Serializable {
         return name;
     }
     
-    public int setAge() {
+    public int getAge() {
         return age;
     }
 
